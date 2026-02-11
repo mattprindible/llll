@@ -18,7 +18,11 @@ server = FastMCP(
         "pybricks.pupdevices, pybricks.parameters, pybricks.tools, "
         "pybricks.robotics. IMPORTANT: run_program returns only the last 500 "
         "lines of output to conserve tokens. Use read_log() with offset/limit "
-        "to read specific parts of the full log if you need more context."
+        "to read specific parts of the full log if you need more context. "
+        "TIP: Write structured, parseable logs to help yourself debug. Use clear "
+        "markers like '=== Test Start ===', consistent prefixes like 'ERROR:', "
+        "and key-value pairs like 'Battery: 7200 mV'. This makes it easier to "
+        "grep logs and find specific information later."
     ),
 )
 

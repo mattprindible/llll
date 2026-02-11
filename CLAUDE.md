@@ -116,6 +116,40 @@ async def main():
 run_task(main())
 ```
 
+## Writing Effective Logs
+
+Since `print()` is your only telemetry, write logs that are easy for you to parse and debug later. The `run_program` tool returns only the last 500 lines, so you'll often use `read_log()` to search through full output.
+
+**Helpful patterns (suggestions, not requirements):**
+
+```python
+# Clear section markers (easy to grep)
+print("=== Motor Test Start ===")
+# ... test code ...
+print("=== Motor Test Complete ===")
+
+# Structured key-value pairs (easy to parse)
+print(f"Battery: {hub.battery.voltage()} mV")
+print(f"Motor speed: {motor.speed()} deg/s")
+
+# Consistent prefixes for errors/warnings
+print("ERROR: Motor not connected on Port A")
+print("WARNING: Battery voltage low")
+
+# Step numbers for multi-step tests
+print("Step 1: Calibrating sensor...")
+print("Step 2: Running motor...")
+
+# Test results with clear markers
+print("✓ Test passed: Motor rotated 360 degrees")
+print("✗ Test failed: Sensor reading out of range")
+```
+
+These patterns make it easier to:
+- Use `read_log()` with specific searches
+- Quickly identify errors or specific test results
+- Navigate long logs efficiently
+
 ## Hardware Notes
 
 - Hub must have **Pybricks firmware** flashed (one-time setup via `pybricksdev flash`)
