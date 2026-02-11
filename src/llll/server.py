@@ -16,11 +16,17 @@ server = FastMCP(
         "generously. Programs run on a constrained MicroPython subset: no "
         "filesystem, no networking, no REPL. Key modules: pybricks.hubs, "
         "pybricks.pupdevices, pybricks.parameters, pybricks.tools, "
-        "pybricks.robotics."
+        "pybricks.robotics. IMPORTANT: run_program returns only the last 500 "
+        "lines of output to conserve tokens. Use read_log() with offset/limit "
+        "to read specific parts of the full log if you need more context."
     ),
 )
 
 PROJECT_DIR = Path.cwd()
+
+# Maximum lines of output to return from run_program (tail truncation)
+# Full output is always saved to log file - use read_log to access complete output
+MAX_OUTPUT_LINES = 500
 
 
 def _default_hub_name() -> str | None:
@@ -93,6 +99,10 @@ async def run_program(
     Compiles, uploads, and executes the program, then returns the captured output.
     The program's print() statements are the primary way to get data back from the hub.
 
+    Note: Output is truncated to the last 500 lines to conserve tokens. The full
+    output is always saved to a log file. Use read_log() to access the complete output
+    if needed, with offset/limit parameters to read specific sections.
+
     Args:
         file: Path to the .py file, relative to the project root.
         hub_name: Bluetooth name of the hub (optional, uses config default if set).
@@ -116,8 +126,22 @@ async def run_program(
 
     parts.append(f"Log: {result['log_file']}")
     parts.append("")
-    parts.append("--- Output ---")
-    parts.append(result["output"])
+
+    # Truncate output to last N lines to save tokens
+    output = result["output"]
+    output_lines = output.splitlines()
+    total_lines = len(output_lines)
+
+    if total_lines > MAX_OUTPUT_LINES:
+        # Return tail of output
+        truncated_lines = output_lines[-MAX_OUTPUT_LINES:]
+        parts.append(f"--- Output (last {MAX_OUTPUT_LINES} of {total_lines} lines) ---")
+        parts.append(f"⚠️  Output truncated. Use read_log('{result['log_file']}') for full output.")
+        parts.append("")
+        parts.append("\n".join(truncated_lines))
+    else:
+        parts.append("--- Output ---")
+        parts.append(output)
 
     return "\n".join(parts)
 
