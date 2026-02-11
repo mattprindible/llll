@@ -40,7 +40,7 @@ The agent can detect hardware, debug programs, tune behavior, and autonomously d
 
 ```bash
 # Install globally with pipx
-pipx install llll
+pipx install llll-mcp
 
 # Initialize a new workspace
 cd your-robot-project/
@@ -53,7 +53,7 @@ llll init --detect
 ### Using pip
 
 ```bash
-pip install llll
+pip install llll-mcp
 ```
 
 ### From Source
@@ -68,7 +68,7 @@ pip install -e .
 
 1. **Install llll globally:**
    ```bash
-   pipx install llll
+   pipx install llll-mcp
    ```
 
 2. **Initialize your robot project:**
