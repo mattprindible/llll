@@ -1,0 +1,21 @@
+# Logs (keep the directory, ignore contents)
+logs/*
+!logs/.gitkeep
+
+# llll temp files
+_llll_discover.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
