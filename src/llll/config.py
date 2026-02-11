@@ -38,6 +38,8 @@ def save_config(project_dir: Path, data: dict) -> Path:
         lines.append(f"type = {_toml_value(hub['type'])}")
         if hub.get("name"):
             lines.append(f"name = {_toml_value(hub['name'])}")
+        if hub.get("pybricks_version"):
+            lines.append(f"pybricks_version = {_toml_value(hub['pybricks_version'])}")
         if hub.get("battery_voltage"):
             lines.append(f"battery_voltage = {hub['battery_voltage']}")
         lines.append("")
@@ -77,6 +79,7 @@ def discovery_to_config(discovery_data: dict) -> dict:
         "type": discovery_data["hub_type"],
         "name": discovery_data.get("hub_name"),
         "battery_voltage": discovery_data.get("battery_voltage"),
+        "pybricks_version": discovery_data.get("pybricks_version"),
         "ports": ports,
     }
 
@@ -97,6 +100,8 @@ def format_hub_info(cfg: dict) -> str:
         lines.append(f"Hub: {hub['type']}")
         if hub.get("name"):
             lines.append(f"Name: {hub['name']}")
+        if hub.get("pybricks_version"):
+            lines.append(f"Pybricks: {hub['pybricks_version']}")
         if hub.get("battery_voltage"):
             lines.append(f"Battery: {hub['battery_voltage']} mV")
 

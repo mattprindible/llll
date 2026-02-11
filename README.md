@@ -139,9 +139,12 @@ detect_hub()
 # Creates llll.toml with:
 # - Hub type (e.g., "InventorHub")
 # - Hub Bluetooth name
+# - Pybricks firmware version
 # - Battery voltage
 # - Connected devices on each port
 ```
+
+If the agent detects an outdated Pybricks version, it can advise you to run `llll flash --check` to see if an update is available.
 
 ### 2. Write a Program
 
@@ -238,6 +241,7 @@ After running `detect_hub()`, a `llll.toml` file is created:
 [[hubs]]
 type = "InventorHub"
 name = "MyRobot"
+pybricks_version = "3.6.1"
 battery_voltage = 8234
 
 [hubs.ports]
@@ -262,6 +266,17 @@ llll init                    # Create .mcp.json
 llll init --detect           # Create .mcp.json and detect hub (creates llll.toml)
 llll init --detect --hub-name "MyRobot"  # Detect specific hub by name
 ```
+
+### `llll flash`
+
+Check for and flash Pybricks firmware updates:
+
+```bash
+llll flash --check           # Check if update is available
+llll flash                   # Flash latest firmware (interactive, requires confirmation)
+```
+
+**Important:** Flashing firmware is a destructive operation that replaces your hub's firmware. The hub must be connected via USB and in DFU mode (hold the button while connecting). This is **not** available as an MCP tool - it must be run manually by the user for safety.
 
 ### `llll` (Server Mode)
 

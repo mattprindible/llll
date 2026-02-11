@@ -7,10 +7,12 @@ An MCP server that gives AI agents the ability to run MicroPython programs on LE
 ```
 src/llll/
 ├── server.py       — MCP server (FastMCP-based)
+├── cli.py          — Command-line interface (init, flash)
 ├── runner.py       — pybricksdev subprocess wrapper + log capture
 ├── logs.py         — Log file management
 ├── config.py       — llll.toml configuration management
-├── discover.py     — Hub detection and device discovery
+├── discover.py     — Hub detection and device discovery (includes version detection)
+├── firmware.py     — Firmware version checking and flashing
 └── __init__.py     — Package initialization
 logs/               — Captured run output (gitignored)
 pyproject.toml      — Python package configuration
@@ -20,12 +22,18 @@ pyproject.toml      — Python package configuration
 
 The server exposes six tools for AI agents:
 
-1. **detect_hub** — Auto-detect hub type, name, battery, and connected devices. Saves to `llll.toml`
-2. **get_hub_info** — Read configured hub information from `llll.toml`
+1. **detect_hub** — Auto-detect hub type, name, battery, Pybricks version, and connected devices. Saves to `llll.toml`
+2. **get_hub_info** — Read configured hub information from `llll.toml` (includes firmware version)
 3. **run_program** — Compile, upload, and run a `.py` file on the hub via Bluetooth
 4. **list_programs** — Find `.py` files in the workspace
 5. **read_log** — Read output from a previous run
 6. **list_run_logs** — List all available run logs
+
+### Firmware Management
+
+**Version Detection:** When `detect_hub` runs, it detects the Pybricks firmware version and includes it in the hub info. Agents can see this and advise users if an update is available.
+
+**Flashing (CLI only, not a tool):** Firmware flashing is intentionally NOT exposed as an MCP tool because it's a destructive operation. Instead, agents should guide users to run `llll flash --check` or `llll flash` manually. This ensures users understand what's happening before modifying their hub's firmware.
 
 ## Installation & Setup
 

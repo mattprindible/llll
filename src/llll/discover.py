@@ -58,6 +58,31 @@ if hub is None:
 hub_name = hub.system.name()
 battery_mv = hub.battery.voltage()
 
+# --- Pybricks version ---
+pybricks_version = "unknown"
+try:
+    import usys
+    # Parse from usys.version string
+    # Format: "3.4.0; Pybricks MicroPython ci-release-86-v3.6.1 on 2025-03-11"
+    version_str = usys.version
+    if "Pybricks" in version_str and "-v" in version_str:
+        # Extract version after "-v" pattern (e.g., "ci-release-86-v3.6.1")
+        parts = version_str.split("-v")
+        if len(parts) > 1:
+            # Get everything after "-v" and split on spaces
+            after_v = parts[-1].split()[0]
+            # Clean up to get just the version number
+            clean_version = ""
+            for char in after_v:
+                if char.isdigit() or char == ".":
+                    clean_version += char
+                elif clean_version:  # Stop at first non-version char after we started
+                    break
+            if clean_version.count(".") >= 2:
+                pybricks_version = clean_version
+except Exception:
+    pybricks_version = "unknown"
+
 # --- Scan ports ---
 ports = []
 for letter in ["A", "B", "C", "D", "E", "F"]:
@@ -79,6 +104,7 @@ result = {
     "hub_type": hub_type,
     "hub_name": hub_name,
     "battery_voltage": battery_mv,
+    "pybricks_version": pybricks_version,
     "ports": ports,
 }
 
