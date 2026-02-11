@@ -1,4 +1,4 @@
-# llll — LEGO lin la loop
+# llll — LEGO LIN LA LOOP
 
 An MCP (Model Context Protocol) server that gives AI agents the ability to run MicroPython programs on LEGO Mindstorms hubs via [Pybricks](https://pybricks.com/).
 
@@ -59,7 +59,7 @@ pip install llll
 ### From Source
 
 ```bash
-git clone https://github.com/yourusername/llll.git
+git clone https://github.com/mattprindible/llll.git
 cd llll
 pip install -e .
 ```

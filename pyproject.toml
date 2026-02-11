@@ -5,12 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "llll"
 version = "0.1.0"
-description = "LEGO lin la loop — an agentic development loop for LEGO Mindstorms via Pybricks"
+description = "LEGO LIN LA LOOP (llll) is an agentic development loop for LEGO Mindstorms via Pybricks"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "Matt", email = "matt@example.com"}
+    {name = "Matt Prindible", email = "code@mattprindible.com"}
 ]
 keywords = ["lego", "mindstorms", "pybricks", "mcp", "robotics", "ai", "agents"]
 classifiers = [
@@ -30,9 +30,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/USERNAME/llll"
-Repository = "https://github.com/USERNAME/llll"
-Issues = "https://github.com/USERNAME/llll/issues"
+Homepage = "https://github.com/mattprindible/llll"
+Repository = "https://github.com/mattprindible/llll"
+Issues = "https://github.com/mattprindible/llll/issues"
 
 [project.scripts]
 llll = "llll.cli:main"
