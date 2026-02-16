@@ -151,6 +151,51 @@ async def run_program(
 
 
 @server.tool()
+async def upload_program(
+    file: str,
+    hub_name: str | None = None,
+    timeout: int = 60,
+) -> str:
+    """Upload a MicroPython program to the LEGO hub without starting it.
+
+    Compiles and uploads the program via Bluetooth, then disconnects immediately.
+    The program is stored on the hub but does not run. This is useful when another
+    client needs to connect to the hub after upload (e.g. for automated testing),
+    or when you want to upload now and start manually via the hub button later.
+
+    Args:
+        file: Path to the .py file, relative to the project root.
+        hub_name: Bluetooth name of the hub (optional, uses config default if set).
+        timeout: Max seconds to wait for the upload to complete. Default 60.
+    """
+    if hub_name is None:
+        hub_name = _default_hub_name()
+
+    result = await runner.run_program(file, PROJECT_DIR, hub_name, timeout, start=False)
+
+    if result.get("error"):
+        return f"Error: {result['error']}"
+
+    parts = [f"Program: {file}"]
+
+    if result["timed_out"]:
+        parts.append(f"TIMED OUT after {result['duration']:.1f}s")
+    else:
+        status = "Uploaded" if result["success"] else "Upload failed"
+        parts.append(f"Status: {status} (exit code {result['exit_code']})")
+        parts.append(f"Duration: {result['duration']:.1f}s")
+
+    parts.append(f"Log: {result['log_file']}")
+
+    if result["output"].strip():
+        parts.append("")
+        parts.append("--- Output ---")
+        parts.append(result["output"])
+
+    return "\n".join(parts)
+
+
+@server.tool()
 def list_programs(directory: str = ".") -> str:
     """List MicroPython (.py) program files in the project.
 

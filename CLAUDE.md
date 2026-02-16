@@ -25,9 +25,10 @@ The server exposes six tools for AI agents:
 1. **detect_hub** — Auto-detect hub type, name, battery, Pybricks version, and connected devices. Saves to `llll.toml`
 2. **get_hub_info** — Read configured hub information from `llll.toml` (includes firmware version)
 3. **run_program** — Compile, upload, and run a `.py` file on the hub via Bluetooth
-4. **list_programs** — Find `.py` files in the workspace
-5. **read_log** — Read output from a previous run
-6. **list_run_logs** — List all available run logs
+4. **upload_program** — Compile and upload a `.py` file without starting it (uses `--no-start`). Useful when another client needs to connect after upload (e.g. automated testing) or when the user wants to start manually via the hub button
+5. **list_programs** — Find `.py` files in the workspace
+6. **read_log** — Read output from a previous run
+7. **list_run_logs** — List all available run logs
 
 ### Firmware Management
 

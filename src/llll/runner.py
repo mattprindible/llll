@@ -10,8 +10,9 @@ async def run_program(
     project_dir: Path,
     hub_name: str | None = None,
     timeout: int = 60,
+    start: bool = True,
 ) -> dict:
-    """Compile, upload, and run a MicroPython program on the hub.
+    """Compile, upload, and optionally run a MicroPython program on the hub.
 
     Returns a dict with: success, exit_code, timed_out, duration, output, log_file, error.
     """
@@ -37,6 +38,8 @@ async def run_program(
     cmd = ["pybricksdev", "run", "ble"]
     if hub_name:
         cmd.extend(["--name", hub_name])
+    if not start:
+        cmd.append("--no-start")
     cmd.append(str(program))
 
     start_time = datetime.now(timezone.utc)
