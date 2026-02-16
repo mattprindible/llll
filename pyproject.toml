@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "llll-mcp"
-version = "0.1.1"
+version = "0.1.2"
 description = "LEGO LIN LA LOOP (llll) is an agentic development loop for LEGO Mindstorms via Pybricks"
 readme = "README.md"
 requires-python = ">=3.10"
